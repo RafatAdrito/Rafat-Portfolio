@@ -1,6 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL
+    },
+  },
+});
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -9,10 +15,10 @@ export default async function handler(req, res) {
 
       const newContact = await prisma.contact.create({
         data: {
-            name,
-            email,
-            phone,
-            Message:message
+          name,
+          email,
+          phone,
+          Message: message
         },
       });
 
